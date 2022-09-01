@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('tile', 'Pagina Inicial - Global Centro de Visto')
+@section('tile', 'VS Global - Informação de Pedido de Visto')
 
 @section('content')
     <main class="mainspace">
