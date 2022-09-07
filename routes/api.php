@@ -30,9 +30,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/registeradm', [AuthController::class, 'registeradm']);
 
     // Get All Booking User
-    Route::get('/listbooking/{id}', [BookingController::class, 'list']);
+    Route::get('/booking', [BookingController::class, 'list']);
 
     // Get One Booking User
     Route::get('/booking/{id}', [BookingController::class, 'show']);
+    // Create Booking User
+    Route::post('/booking', [BookingController::class, 'store']);
 
 });
