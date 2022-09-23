@@ -25,23 +25,22 @@ class BookingController extends Controller
             'phone_number' => 'required|string',
             'subject' => 'required|string',
             'description' => 'required|string',
-            'status' => 'required|integer',
         ]);
 
         // Save Justification
-        $justification = Booking::Create([
+        $booking = Booking::Create([
             'user_id' => auth()->user()->id,
             'date' => $attrs['date'],
             'passport_number' => $attrs['passport_number'],
             'phone_number' => $attrs['phone_number'],
             'subject' => $attrs['subject'],
             'description' => $attrs['description'],
-            'status' => $attrs['status'],
+            'status' => 1,
         ]);
 
         return response([
             'message' => 'Agendamento criado com sucesso!',
-            'booking' => $justification
+            'booking' => $booking
         ], 200);
     }
 
@@ -67,9 +66,32 @@ class BookingController extends Controller
         //
     }
 
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request, Booking $id)
     {
-        //
+        $booking = Booking::find($id);
+
+        if(!$booking)
+        {
+            return response([
+                'message' => 'Agendamento não encontrado!'
+            ], 403);
+        }
+
+        //validate fields
+        $attrs = $request->validate([
+            'status' => 'required|string'
+        ]);
+
+        $booking->update([
+            'status' =>  $attrs['status']
+        ]);
+
+        // for now skip for post image
+
+        return response([
+            'message' => 'Agendamento não encontrado!.',
+            'post' => $booking
+        ], 200);
     }
 
     public function destroy(Booking $booking)

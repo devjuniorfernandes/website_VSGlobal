@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/registeradm', [AuthController::class, 'registeradm']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -31,10 +30,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // Get All Booking User
     Route::get('/booking', [BookingController::class, 'list']);
-
     // Get One Booking User
     Route::get('/booking/{id}', [BookingController::class, 'show']);
     // Create Booking User
     Route::post('/booking', [BookingController::class, 'store']);
-
+    // Create Booking User
+    Route::put('/booking/{id}', [BookingController::class, 'update']);
 });

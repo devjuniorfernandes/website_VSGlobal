@@ -26,6 +26,11 @@ class AuthController extends Controller
             'level' => 1,
             'password' => bcrypt($attrs['password']),
         ]);
+
+        return response([
+            'message' => 'Registrado com sucesso!',
+            'user' => $user,
+        ], 200);
     }
 
     //Register User
@@ -51,8 +56,9 @@ class AuthController extends Controller
         // Return User & Token in response
 
         return response([
+            'message' => 'Registrado com sucesso!',
             'user' => $user,
-        ]);
+        ], 200);
     }
 
     public function login(Request $request)
