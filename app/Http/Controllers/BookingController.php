@@ -35,7 +35,7 @@ class BookingController extends Controller
             'phone_number' => $attrs['phone_number'],
             'subject' => $attrs['subject'],
             'description' => $attrs['description'],
-            'status' => 1,
+            'status' => 0,
         ]);
 
         return response([
@@ -66,12 +66,11 @@ class BookingController extends Controller
         //
     }
 
-    public function update(Request $request, Booking $id)
+    public function update(Request $request, $id)
     {
         $booking = Booking::find($id);
 
-        if(!$booking)
-        {
+        if (!$booking) {
             return response([
                 'message' => 'Agendamento não encontrado!'
             ], 403);
@@ -79,7 +78,7 @@ class BookingController extends Controller
 
         //validate fields
         $attrs = $request->validate([
-            'status' => 'required|string'
+            'status' => 'required|integer'
         ]);
 
         $booking->update([
@@ -90,12 +89,31 @@ class BookingController extends Controller
 
         return response([
             'message' => 'Agendamento não encontrado!.',
-            'post' => $booking
+            'booking' => $booking
         ], 200);
     }
 
-    public function destroy(Booking $booking)
+    //delete post
+    public function destroy($id)
     {
-        //
+        $booking = Booking::find($id);
+
+        if (!$booking) {
+            return response([
+                'message' => 'Agendamento não encontrado!'
+            ], 403);
+        }
+
+        if ($booking->user_id != auth()->user()->id) {
+            return response([
+                'message' => 'Permissão negada!'
+            ], 403);
+        }
+
+        $booking->delete();
+
+        return response([
+            'message' => 'Agendamento Apagado com sucesso!'
+        ], 200);
     }
 }

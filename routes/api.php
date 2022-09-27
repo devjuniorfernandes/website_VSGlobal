@@ -34,6 +34,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/booking/{id}', [BookingController::class, 'show']);
     // Create Booking User
     Route::post('/booking', [BookingController::class, 'store']);
-    // Create Booking User
+    // Update Booking User
     Route::put('/booking/{id}', [BookingController::class, 'update']);
+    // Create Booking User
+    Route::delete('/booking/{id}', [BookingController::class, 'destroy']);
+
 });
